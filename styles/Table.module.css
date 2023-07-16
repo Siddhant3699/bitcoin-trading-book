@@ -1,0 +1,21 @@
+.table {
+  display: table;
+  border: 1px solid black;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.2);
+}
+
+.tableRow {
+  display: table-row;
+}
+
+.tableHeading {
+  display: table-row;
+  font-weight: bold;
+  background-color: white;
+}
+
+.tableCell {
+  display: table-cell;
+  padding: 5px 25px;
+  text-align: center;
+}
