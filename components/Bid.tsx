@@ -2,6 +2,7 @@ import {
   buildOrderBookObject,
   generateOrderBookTotal,
 } from "@/resources/common";
+import { DATA_LENGTH } from "@/resources/constants";
 import { TradingBookEntry, Props } from "@/resources/types";
 import styles from "@/styles/Table.module.css";
 import { FunctionComponent, ReactNode } from "react";
@@ -16,9 +17,9 @@ const Bid: FunctionComponent<Props> = (props: Props): ReactNode => {
       (book1: TradingBookEntry, book2: TradingBookEntry): number =>
         book2.price - book1.price
     )
-  ).slice(0, 25);
+  ).slice(0, Math.min(DATA_LENGTH, props.minLength));
 
-  const maxTotal = bidData[bidData.length - 1]?.total;
+  const maxTotal = bidData[bidData.length - 1]?.total ?? 100;
 
   return (
     <>
@@ -30,7 +31,7 @@ const Bid: FunctionComponent<Props> = (props: Props): ReactNode => {
           <div className={styles.tableCell}>PRICE</div>
         </div>
         {bidData.map((row: TradingBookEntry, index: number) => {
-          const percentageTotal = (100 * row.total) / maxTotal;
+          const percentageTotal = (100 * (row.total ?? 0)) / maxTotal;
           return (
             <div
               className={styles.tableRow}

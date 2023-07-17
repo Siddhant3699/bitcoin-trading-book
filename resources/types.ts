@@ -7,6 +7,7 @@ export type TradingBookEntry = {
 
 export type Props = {
   data: number[][];
+  minLength: number;
 };
 
 export type RawData = number[][] | number[];

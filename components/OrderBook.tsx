@@ -50,21 +50,15 @@ const OrderBook: FunctionComponent = (): ReactNode => {
   };
 
   const removeFromBids = (price: number): void => {
-    const bidDataCopy = [...bidData];
-    const index = bidDataCopy.findIndex(
-      (row: number[]): boolean => row[0] === price
-    );
-    bidDataCopy.slice(index, 1);
-    setBidData([...bidDataCopy]);
+    setBidData((previousBidData: number[][]) => {
+      return previousBidData.filter((data: number[]) => data[0] !== price);
+    });
   };
 
   const removeFromAsks = (price: number): void => {
-    const askDataCopy = [...askData];
-    const index = askDataCopy.findIndex(
-      (row: number[]): boolean => row[0] === price
-    );
-    askDataCopy.slice(index, 1);
-    setAskData([...askDataCopy]);
+    setAskData((previousAskData: number[][]) => {
+      return previousAskData.filter((data: number[]) => data[0] !== price);
+    });
   };
 
   const updateTradingBook = (data: number[]): void => {
@@ -105,8 +99,14 @@ const OrderBook: FunctionComponent = (): ReactNode => {
     <>
       <h2 className={styles.heading}>Order Book (BTC/USD)</h2>
       <div className={styles.orderBook}>
-        <Bid data={bidData} />
-        <Ask data={askData} />
+        <Bid
+          data={bidData}
+          minLength={Math.min(bidData.length, askData.length)}
+        />
+        <Ask
+          data={askData}
+          minLength={Math.min(bidData.length, askData.length)}
+        />
       </div>
     </>
   );
